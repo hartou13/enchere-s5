@@ -15,7 +15,7 @@ public class V_vola_miditra extends EnchereEntity<V_vola_miditra> {
     String motif;
     @ColumnName("utilisateurid")
     String idUtilisateur;
-    @ColumnName
+    @ColumnName("demandeRechargeid")
     String idDemandeRecharge;
     public String getRefMouvement() {
         return refMouvement;
