@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@SpringBootApplication(scanBasePackages={"gestion.controller","com.kilometer.kilo"})
+@SpringBootApplication(scanBasePackages={"controller","com.kilometer.kilo"})
 @CrossOrigin(origins={"http://localhost:3001/","http://localhost:3000/","http://localhost:80/kilometrage/*"})
 public class KiloApplication {
 	

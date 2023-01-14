@@ -13,8 +13,7 @@ public class V_vola_miditra extends EnchereEntity<V_vola_miditra> {
     Double sommeEntrant;
     @ColumnName
     String motif;
-    @ColumnName("utilisateurid")
-    String idUtilisateur;
+    
     @ColumnName("demandeRechargeid")
     String idDemandeRecharge;
     public String getRefMouvement() {
@@ -35,12 +34,7 @@ public class V_vola_miditra extends EnchereEntity<V_vola_miditra> {
     public void setMotif(String motif) {
         this.motif = motif;
     }
-    public String getIdUtilisateur() {
-        return idUtilisateur;
-    }
-    public void setIdUtilisateur(String idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
+    
     public String getIdDemandeRecharge() {
         return idDemandeRecharge;
     }

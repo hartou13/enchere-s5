@@ -3,6 +3,8 @@ package model.enchere;
 import java.time.Duration;
 import java.util.Date;
 
+import org.postgresql.util.PGInterval;
+
 import gdao.genericdao.ColumnName;
 import model.EnchereEntity;
 
@@ -12,11 +14,10 @@ public class Enchere extends EnchereEntity<Enchere>{
     @ColumnName
     Date debut;
     @ColumnName
-    Duration duree;
+    PGInterval duree;
     @ColumnName
     Double prixDeMisEnEnchere;
-    @ColumnName
-    Boolean vita;
+    
     @ColumnName("Lotid")
     Integer idLot;
     @ColumnName
@@ -33,24 +34,14 @@ public class Enchere extends EnchereEntity<Enchere>{
     public void setDebut(Date debut) {
         this.debut = debut;
     }
-    public Duration getDuree() {
-        return duree;
-    }
-    public void setDuree(Duration duree) {
-        this.duree = duree;
-    }
+    
     public Double getPrixDeMisEnEnchere() {
         return prixDeMisEnEnchere;
     }
     public void setPrixDeMisEnEnchere(Double prixDeMisEnEnchere) {
         this.prixDeMisEnEnchere = prixDeMisEnEnchere;
     }
-    public Boolean getVita() {
-        return vita;
-    }
-    public void setVita(Boolean vita) {
-        this.vita = vita;
-    }
+    
     public Integer getIdLot() {
         return idLot;
     }
@@ -62,6 +53,12 @@ public class Enchere extends EnchereEntity<Enchere>{
     }
     public void setCommission(Double commission) {
         Commission = commission;
+    }
+    public PGInterval getDuree() {
+        return duree;
+    }
+    public void setDuree(PGInterval duree) {
+        this.duree = duree;
     }
     
 }

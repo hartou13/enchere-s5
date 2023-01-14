@@ -24,6 +24,7 @@ public class GenericDAO {
         Enumeration<URL> resources = classLoader.getResources(path);
         String tempPath="";
         boolean isApacheTomcatWebProject=false;
+        System.out.println("eto");
         while (resources.hasMoreElements()) {
             URL resource = resources.nextElement();
             System.out.println("------------ main " +resource);
@@ -33,7 +34,8 @@ public class GenericDAO {
                 break;
             }
         }
-        System.out.println(tempPath.subSequence(1,tempPath.indexOf("build")));
+        // System.out.println(tempPath.subSequence(1,tempPath.indexOf("build")));
+        System.out.println(tempPath);
         return isApacheTomcatWebProject?(tempPath.subSequence(1,tempPath.indexOf("build")).toString()):"";
     }
     public static void check(String file) throws IOException, DatabaseConfException {
@@ -87,7 +89,7 @@ public class GenericDAO {
         } 
     }
     public static Connection getConPost() throws IOException, ClassNotFoundException, SQLException, DatabaseConfException {
-        String filename =getMainClassPath()+ "databaseManager.hart.conf";
+        String filename = "databaseManager.hart.conf";
         check(filename);
         System.out.println(filename);
         HashMap<String, String> conf = new Reader().read(filename);

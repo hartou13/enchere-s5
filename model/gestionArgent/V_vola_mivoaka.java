@@ -10,8 +10,7 @@ public class V_vola_mivoaka extends EnchereEntity<V_vola_mivoaka> {
     Double sommeSortant;
     @ColumnName
     String motif;
-    @ColumnName("utilisateurid")
-    String idUtilisateur;
+    
     @ColumnName("miseGagnanteid")
     String idMiseGagnante;
     public String getRefMouvement() {
@@ -32,12 +31,7 @@ public class V_vola_mivoaka extends EnchereEntity<V_vola_mivoaka> {
     public void setMotif(String motif) {
         this.motif = motif;
     }
-    public String getIdUtilisateur() {
-        return idUtilisateur;
-    }
-    public void setIdUtilisateur(String idUtilisateur) {
-        this.idUtilisateur = idUtilisateur;
-    }
+    
     public String getIdMiseGagnante() {
         return idMiseGagnante;
     }
