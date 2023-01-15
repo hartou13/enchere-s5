@@ -28,11 +28,12 @@ class ListStat extends Component {
             return <button onClick={this.reduce}>Reduce</button>;
         }
     }
-    render() { 
+    checkNumber=()=>{
         let nb=0;
         var limited=this.state.limited;
-        return (
-            <table>
+        if(this.props.tab.length > 0){
+            return (
+                <table>
                 <thead>
                     <ListHeader obj={this.props.tab[0]}></ListHeader>
                 </thead>
@@ -51,6 +52,11 @@ class ListStat extends Component {
                     </tr>
                 </tbody>
             </table>)
+        }
+    }
+    render() { 
+        return (
+            this.checkNumber())
         ;
     }
 }

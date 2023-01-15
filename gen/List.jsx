@@ -13,20 +13,28 @@ class List extends Component {
         nom:"rabe",
         prenom:"nandra"
     }];
+    checkNumber=()=>{
+        console.log(this.props.tab.length +" ny habeny");
+        if(this.props.tab.length > 0){
+            return (
+                <table>
+                    <thead>
+                        <ListHeader obj={this.props.tab[0]}></ListHeader>
+                    </thead>
+                    <tbody>
+                        {this.props.tab.map(el=>
+                            <ListLine obj={el}/>
+                            )}
+                    </tbody>
+                </table>)
+        }
+    }
     render() { 
         return (
-            <table>
-                <thead>
-                    <ListHeader obj={this.props.tab[0]}></ListHeader>
-                </thead>
-                <tbody>
-                    {this.props.tab.map(el=>
-                        <ListLine obj={el}/>
-                        )}
-                </tbody>
-            </table>)
+            this.checkNumber())
         ;
     }
+    
 }
  
 export default List;
