@@ -72,7 +72,6 @@ CREATE TABLE mise (
 
 CREATE TABLE miseGagnante (
   id SERIAL ,
-  daty date,
   miseid int4 ,
   PRIMARY KEY (id)
 );
@@ -83,6 +82,7 @@ CREATE TABLE mouvementArgent (
   motif VARCHAR(255),
   demandeRechargeid int4,
   miseGagnanteid int4 ,
+  daty TIMESTAMP,
   PRIMARY KEY (id)
 );
 create sequence user_seq;
@@ -182,10 +182,10 @@ insert into categorie_lot values (1,1);
 insert into categorie_lot values (3,2);
 insert into categorie_lot values (4,2);
 
-insert into mouvementArgent (motif, demandeRechargeId) values ('init client', 1);
-insert into mouvementArgent (motif, demandeRechargeId) values ('init client', 2);
-insert into mouvementArgent (motif, demandeRechargeId) values ('init client', 3);
-insert into mouvementArgent (motif, demandeRechargeId) values ('init client', 4);
+insert into mouvementArgent (motif, demandeRechargeId, daty) values ('init client', 1, current_timestamp);
+insert into mouvementArgent (motif, demandeRechargeId, daty) values ('init client', 2, current_timestamp);
+insert into mouvementArgent (motif, demandeRechargeId, daty) values ('init client', 3, current_timestamp);
+insert into mouvementArgent (motif, demandeRechargeId, daty) values ('init client', 4, current_timestamp);
 
 insert into miseGagnante(daty, miseid) values (current_timestamp, 3);
 
@@ -273,13 +273,32 @@ FROM enchere
 WHERE debut + (duree)::interval > current_timestamp and id not in (select enchereid from misegagnante join mise on mise.id =misegagnante.miseid);
 
 create or replace view v_enchere_en_cours_nb as select CAST(COUNT(*) AS INT) as isa from v_enchere_en_cours;
--- create or replace view v_vola_miditra as 
--- select id, refMouvement, sommeEntrant, motif, utilisateurid,demandeRechargeId from mouvementArgent where sommeEntrant is not null;
 
--- create or replace view v_vola_mivoaka as 
--- select id, refMouvement, sommeSortant, motif, utilisateurid,miseGagnanteid from mouvementArgent where sommeEntrant is not null;
+create or replace view v_vola_miditra as 
+select mouvementArgent.id, mouvementArgent.refmouvement, mouvementArgent.motif, mouvementArgent.demanderechargeid as idMotif, mouvementArgent.daty, demandeRecharge.somme, demandeRecharge.utilisateurid from mouvementArgent join demandeRecharge on demandeRecharge.id=mouvementArgent.demanderechargeid where demandeRechargeId is not null;
+
+create or replace view v_vola_mivoaka as 
+select mouvementArgent.id, mouvementArgent.refMouvement, mouvementArgent.motif, mouvementArgent.miseGagnanteid as idMotif, mouvementArgent.daty, somme, utilisateurid from mouvementArgent join misegagnante on misegagnante.id=mouvementArgent.misegagnanteid join mise on mise.id=misegagnante.miseid where misegagnanteid is not null;
 
 create view v_enchere_tokn_vitaina as 
 SELECT *
 FROM enchere 
 WHERE debut + duree < CURRENT_TIMESTAMP and id not in ( select enchereid from miseGagnante join mise on mise.id =misegagnante.miseid);
+
+create view v_historique_mouvement as
+select * from v_vola_miditra union select * from v_vola_mivoaka order by daty desc where daty > NOW() - INTERVAL '3 weeks';
+
+create view v_depense_utilisateur as 
+select utilisateurid, sum(somme) as depense from v_vola_mivoaka group by utilisateurid;
+
+create view v_entree_utilisateur as 
+select utilisateurid, sum(somme) as entree from v_vola_miditra group by utilisateurid;
+
+create view v_solde_user as
+SELECT utilisateur.*,
+-COALESCE(v_depense_utilisateur.depense, 0) +COALESCE(v_entree_utilisateur.entree, 0) as solde
+FROM utilisateur
+LEFT JOIN v_depense_utilisateur
+ON utilisateur.id = v_depense_utilisateur.utilisateurid
+LEFT JOIN v_entree_utilisateur
+ON utilisateur.id = v_entree_utilisateur.utilisateurid;
