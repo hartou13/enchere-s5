@@ -524,7 +524,8 @@ public class GenericDAO {
                             }
                         }
                         else if (liFi[i].getType().getSimpleName().equalsIgnoreCase("Date")) {
-                            set.invoke(otemp, new Date(RS.getString(champSelect.get(i)).replace("-", "/")));
+                            java.sql.Date temp=RS.getDate(champSelect.get(i));
+                            set.invoke(otemp, new Date(temp.getTime()));
                         } 
                         else if (liFi[i].getType().getSimpleName().equalsIgnoreCase("Duration")) {
                             PGInterval pgInterval = (PGInterval) RS.getObject(champSelect.get(i));

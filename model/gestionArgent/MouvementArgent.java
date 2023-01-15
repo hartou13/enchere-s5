@@ -1,8 +1,12 @@
 package model.gestionArgent;
 
-import gdao.genericdao.ColumnName;
+import java.util.Date;
 
-public class MouvementArgent {
+import gdao.genericdao.ColumnName;
+import gdao.inherit.DBModel;
+import model.EnchereEntity;
+
+public class MouvementArgent extends EnchereEntity<MouvementArgent>{
     @ColumnName
     String refMouvement;
     @ColumnName
@@ -11,6 +15,8 @@ public class MouvementArgent {
     String idDemandeRecharge;
     @ColumnName("miseGagnanteid")
     String idMiseGagnante;
+    @ColumnName
+    Date daty;
     
     public String getRefMouvement() {
         return refMouvement;
@@ -36,6 +42,12 @@ public class MouvementArgent {
     }
     public void setIdMiseGagnante(String idMiseGagnante) {
         this.idMiseGagnante = idMiseGagnante;
+    }
+    public Date getDaty() {
+        return daty;
+    }
+    public void setDaty(Date daty) {
+        this.daty = daty;
     }
     
 }
