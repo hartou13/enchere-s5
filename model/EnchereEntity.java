@@ -4,7 +4,7 @@ import gdao.genericdao.ColumnName;
 import gdao.inherit.DBModel;
 
 public class EnchereEntity<T extends DBModel<T, Integer>> extends DBModel<T , Integer> {
-    @ColumnName
+    @ColumnName(pk=true)
     Integer id;
 
     public Integer getId() {

@@ -5,8 +5,7 @@ import java.util.Date;
 import gdao.genericdao.ColumnName;
 import gdao.genericdao.TableName;
 import model.EnchereEntity;
-
-@TableName
+@TableName("historique_commission")
 public class HistoriqueCommission extends EnchereEntity<HistoriqueCommission> {
     @ColumnName
     Date daty;

@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 
 import gdao.genericdao.GenericDAO;
 import gdao.genericdao.exception.DatabaseConfException;
+import helpers.Token;
 import model.stat.V_depense_moy;
 import model.stat.*;
 import model.utilisateur.Utilisateur;
@@ -20,11 +21,13 @@ import responseHandler.Error;
 
 @RestController
 @RequestMapping("/stat")
-@CrossOrigin(origins={"http://localhost:3001/","http://localhost:3000/","http://localhost:80/kilometrage/*"})
+@CrossOrigin
+
 public class StatController {
     @GetMapping()
-    public String getStat(){
+    public String getStat(@RequestHeader(name="authorization") String token) throws Exception{
         Gson gson = new Gson();
+        if(Token.verifExpired(token)) {
         HashMap<String , Object> res=new HashMap<>();
         try {
             Connection con=GenericDAO.getConPost();
@@ -47,5 +50,8 @@ public class StatController {
             return gson.toJson(new Failure(new Error(500, "Error getting stats")));
         }
         return gson.toJson(new Success(res));
-    }
-}
+    }else {
+        Failure er=new Failure(new Error(403, "You are not allowed to access"));
+        return gson.toJson(er);
+        }
+}}

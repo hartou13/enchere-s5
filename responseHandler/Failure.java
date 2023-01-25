@@ -1,6 +1,6 @@
 package responseHandler;
 
-public class Failure {
+public class Failure extends Response {
     Error error;
 
     public Error getError() {

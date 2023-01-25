@@ -13,9 +13,9 @@ public class Mise extends EnchereEntity<Mise>{
     @ColumnName
     Date daty;
     @ColumnName("utilisateurid")
-    String idUtilisateur;
+    Integer idUtilisateur;
     @ColumnName("enchereid")
-    String idEnchere;
+    Integer idEnchere;
     public String getRefMise() {
         return refMise;
     }
@@ -34,16 +34,16 @@ public class Mise extends EnchereEntity<Mise>{
     public void setDaty(Date daty) {
         this.daty = daty;
     }
-    public String getIdUtilisateur() {
+    public Integer getIdUtilisateur() {
         return idUtilisateur;
     }
-    public void setIdUtilisateur(String idUtilisateur) {
+    public void setIdUtilisateur(Integer idUtilisateur) {
         this.idUtilisateur = idUtilisateur;
     }
-    public String getIdEnchere() {
+    public Integer getIdEnchere() {
         return idEnchere;
     }
-    public void setIdEnchere(String idEnchere) {
+    public void setIdEnchere(Integer idEnchere) {
         this.idEnchere = idEnchere;
     }
     

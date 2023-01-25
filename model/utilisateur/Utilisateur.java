@@ -48,5 +48,10 @@ public class Utilisateur extends EnchereEntity<Utilisateur>{
     public void setDateDeNaissance(Date dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
     }
-
+    @Override
+    public String toString() {
+        return "Utilisateur [refUtilisateur=" + refUtilisateur + ", email=" + email + ", mdp=" + mdp + ", nom=" + nom
+                + ", prenom=" + prenom + ", dateDeNaissance=" + dateDeNaissance + "]";
+    }
+    
 }

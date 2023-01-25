@@ -1,8 +1,9 @@
 package model.admin;
 
 import gdao.genericdao.ColumnName;
+import model.EnchereEntity;
 
-public class Administrateur {
+public class Administrateur extends EnchereEntity<Administrateur>{
     @ColumnName
     String refAdmin, email, mdp, nom;
 

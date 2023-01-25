@@ -42,7 +42,7 @@ public abstract class Madre extends DBModel {
     }
 
     @Override
-    public int save() throws DatabaseConfException{
+    public int save() throws Exception{
         try {
             super.save();
             Madre temp=(Madre) this.get().get(0);

@@ -62,7 +62,7 @@ public class GenericDAO {
                 return liFi1;
             }
         }
-        System.out.println("tsisy ----------------------------------------------------------------");
+        System.out.println("tsisy primary key---");
         return null;
     }
     public static Method setter(Field f) {
@@ -95,7 +95,7 @@ public class GenericDAO {
         HashMap<String, String> conf = new Reader().read(filename);
         Class.forName(conf.get("driver"));
         Connection con;
-        String tempURL = conf.get("url") + conf.get("port") + "/" + conf.get("database");
+        String tempURL = conf.get("url")+ "/" + conf.get("database");
         System.out.println(tempURL);
         con = DriverManager.getConnection(tempURL, conf.get("user"), conf.get("mdp"));
         return con;
@@ -304,7 +304,7 @@ public class GenericDAO {
         }
         return res;
     }
-    public static int update(Object taloha, Object vaovao, Connection con) throws SQLException, DatabaseConfException {
+    public static int update(Object vao, Object taloha, Connection con) throws SQLException, DatabaseConfException {
         Boolean initCO = false;
         con=initCO(initCO, con);
         ArrayList<String> listChamp = new ArrayList<>();
@@ -312,10 +312,13 @@ public class GenericDAO {
         ArrayList listObj = new ArrayList();
         ArrayList listObj2 = new ArrayList();
         String sql = "UPDATE ";
-        sql = checkTableName(taloha, sql);
+        sql = checkTableName(vao, sql);
         sql += " set ";
-        updateList(listChamp, listObj, taloha);
-        updateList(listChamp2, listObj2, vaovao);
+        updateList(listChamp, listObj, vao);
+        System.out.println("obj");
+        System.out.println(vao.toString());
+        updateList(listChamp2, listObj2, taloha);
+        System.out.println(taloha.toString());
         for (int i = 0; i < listChamp.size(); i++) {
             if(i!=0)
                 sql+=",";
@@ -517,7 +520,7 @@ public class GenericDAO {
                                 ColumnName cn2 = getColumnName(liFi21);
                                 if (cn2 != null && cn2.pk()) {
                                     Method set2 = tempOb.getClass().getMethod("set" + UCFirst(liFi21.getName()), liFi21.getType()); // set id
-                                    set2.invoke(tempOb, RS.getString(champSelect.get(i)));
+                                    set2.invoke(tempOb, RS.getObject(champSelect.get(i)));
                                     set.invoke(otemp, liFi[i].getType().cast(GenericDAO.getById(tempOb, con)));
                                     break;
                                 }

@@ -1,14 +1,9 @@
-package responseHandler;
+package helpers;
 
-import java.io.Serializable;
 
-public class Error extends Response{
+public class ErrInfo {
     Integer code;
     String message;
-    public Error(Integer code, String message) {
-        this.code = code;
-        this.message = message;
-    }
     public Integer getCode() {
         return code;
     }
@@ -21,6 +16,9 @@ public class Error extends Response{
     public void setMessage(String message) {
         this.message = message;
     }
-    public Error() {
+    public ErrInfo(){}
+    public ErrInfo(Integer code, String message){
+        this.code=code;
+        this.message=message;
     }
 }

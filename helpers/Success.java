@@ -1,8 +1,7 @@
-package responseHandler;
+package helpers;
 
-import java.io.Serializable;
 
-public class Success extends Response {
+public class Success extends OwnResponse{
     Object data;
 
     public Object getData() {
@@ -12,11 +11,9 @@ public class Success extends Response {
     public void setData(Object data) {
         this.data = data;
     }
-
-    public Success(Object data) {
+    public Success(){}
+    public Success(Object data){
         this.data = data;
     }
-
-    public Success() {
-    }
 }
+

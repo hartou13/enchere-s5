@@ -22,5 +22,12 @@ public class Categorie extends EnchereEntity<Categorie>{
     public void setNomCategorie(String nomCategorie) {
         this.nomCategorie = nomCategorie;
     }
+
+    public Categorie() {}
+	
+	public Categorie(String ref) {
+		setRefCategorie(ref);
+	}
+	
     
 }

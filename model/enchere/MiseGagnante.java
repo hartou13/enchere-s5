@@ -7,13 +7,16 @@ import model.EnchereEntity;
 
 public class MiseGagnante extends EnchereEntity<MiseGagnante> {
     @ColumnName("miseid")
-    String idMise;
-    
-    public String getIdMise() {
+    Integer idMise;
+
+    public Integer getIdMise() {
         return idMise;
     }
-    public void setIdMise(String idMise) {
+
+    public void setIdMise(Integer idMise) {
         this.idMise = idMise;
     }
+    
+    
     
 }
