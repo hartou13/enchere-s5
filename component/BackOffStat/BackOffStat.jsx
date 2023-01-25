@@ -3,6 +3,7 @@ import FetchHelper from '../..//Helper/FetchHelper';
 import List from '../../gen/List';
 import ListStat from '../../gen/ListStat';
 import URLHelper from '../../Helper/URLHelper';
+import NavCategorie from '../../page/NavCategorie';
 class BackOffStat extends Component {
     state = { inf:{
         v_depense_moy:[{
@@ -99,6 +100,8 @@ class BackOffStat extends Component {
     }
     listStat=async ()=>{
         const val=await (FetchHelper.getData(URLHelper.urlgen("stat/")));
+        if("error" in val)
+            window.location.replace("/")
         this.setState({inf:val.data});
         console.log(val.data);
         // console.log("hereeee");
@@ -108,6 +111,7 @@ class BackOffStat extends Component {
         return (<React.Fragment>
             {/* {key.map(element=> */}
                 {/* <List tab={this.state.inf[element]}></Li    st> */}
+                <NavCategorie/>
                 <h2>Depense moyenne des utilisateurs</h2>
                 <ListStat tab={this.state.inf.v_depense_moy}></ListStat> 
                 <h2>Participation moyenne des utilisateurs dans les encheres</h2>

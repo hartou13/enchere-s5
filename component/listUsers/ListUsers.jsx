@@ -2,8 +2,12 @@ import React, { Component } from 'react';
 import FetchHelper from '../../Helper/FetchHelper';
 import URLHelper from '../../Helper/URLHelper';
 import List from '../../gen/List';
+import NavCategorie from '../../page/NavCategorie';
+import { Loading } from '../Loading';
 
 class ListUsers extends Component {
+
+    
     state = { 
         liste: [
 			{
@@ -16,7 +20,7 @@ class ListUsers extends Component {
 				id: 1
 			}
         ]
-     } 
+    } 
     constructor(){
         super();
     //    this.state = {inf:FetchHelper.getData(URLHelper.urlgen("api/Proformat_fournisseur_demande_ressource"))};
@@ -25,12 +29,24 @@ class ListUsers extends Component {
     listStat=async ()=>{
         const val=await (FetchHelper.getData(URLHelper.urlgen("users/")));
         this.setState({liste:val.data.liste});
+        if("error" in val)
+            window.location.replace("/")
         console.log(val.data);
         // console.log("hereeee");
     }
     render() { 
         return (
-            <List tab={this.state.liste}></List>
+            <React.Fragment>
+                <NavCategorie/>
+                { FetchHelper.loading ? (
+                    <Loading></Loading>
+                ) 
+                :(
+                    <div>
+                        <List tab={this.state.liste}></List>
+                    </div>
+                )} 
+            </React.Fragment>
         );
     }
 }

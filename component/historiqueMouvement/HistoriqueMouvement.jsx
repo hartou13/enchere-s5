@@ -3,6 +3,8 @@ import FetchHelper from '../..//Helper/FetchHelper';
 import List from '../../gen/List';
 // import ListStat from '../../gen/ListStat';
 import URLHelper from '../../Helper/URLHelper';
+import NavCategorie from '../../page/NavCategorie';
+import { Loading } from '../Loading';
 
 class HistoriqueMouvement extends Component {
     state = { 
@@ -25,6 +27,8 @@ class HistoriqueMouvement extends Component {
     }
     listHisto=async ()=>{
         const val=await (FetchHelper.getData(URLHelper.urlgen("vola")));
+        if("error" in val)
+            window.location.replace("/")
         this.setState({liste:val.data.liste});
         console.log(val.data);
         // console.log("hereeee");
@@ -32,7 +36,16 @@ class HistoriqueMouvement extends Component {
     render() { 
         // console.log(this.state.liste);
         return (
-            <List tab={this.state.liste}></List>
+            <React.Fragment>
+                <NavCategorie/>
+                {
+                    FetchHelper.loading ?(
+                        <Loading/>
+                    ):(
+                        <List tab={this.state.liste}></List>
+                    )
+                }
+            </React.Fragment>
         );
     }
 }
