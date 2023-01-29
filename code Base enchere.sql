@@ -286,7 +286,7 @@ FROM enchere
 WHERE debut + duree < CURRENT_TIMESTAMP and id not in ( select enchereid from miseGagnante join mise on mise.id =misegagnante.miseid);
 
 create view v_historique_mouvement as
-select * from v_vola_miditra union select * from v_vola_mivoaka order by daty desc where daty > NOW() - INTERVAL '3 weeks';
+select * from v_vola_miditra union select * from v_vola_mivoaka  where daty > NOW() - INTERVAL '3 weeks' order by daty desc;
 
 create view v_depense_utilisateur as 
 select utilisateurid, sum(somme) as depense from v_vola_mivoaka group by utilisateurid;
