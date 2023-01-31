@@ -286,7 +286,7 @@ FROM enchere
 WHERE debut + duree < CURRENT_TIMESTAMP and id not in ( select enchereid from miseGagnante join mise on mise.id =misegagnante.miseid);
 
 create view v_historique_mouvement as
-select * from v_vola_miditra union select * from v_vola_mivoaka order by daty desc where daty > NOW() - INTERVAL '3 weeks';
+select * from v_vola_miditra union select * from v_vola_mivoaka  where daty > NOW() - INTERVAL '3 weeks' order by daty desc;
 
 create view v_depense_utilisateur as 
 select utilisateurid, sum(somme) as depense from v_vola_mivoaka group by utilisateurid;
@@ -302,3 +302,25 @@ LEFT JOIN v_depense_utilisateur
 ON utilisateur.id = v_depense_utilisateur.utilisateurid
 LEFT JOIN v_entree_utilisateur
 ON utilisateur.id = v_entree_utilisateur.utilisateurid;
+
+CREATE OR REPLACE VIEW DemandeRecharge_NON_VALIDER
+AS
+select demandeRecharge.id,refdemande,somme,
+utilisateur.id As idutilisateur,
+refutilisateur,
+nom,
+prenom
+from demandeRecharge
+join utilisateur on utilisateur.id = demandeRecharge.utilisateurid
+where demanderecharge.id not in (select demanderechargeid from mouvementargent)
+;
+
+CREATE OR REPLACE VIEW V_mise_max
+as
+select enchere.id as idenchere,
+  max(somme) as maxmise
+  from enchere
+  join mise on
+  mise.enchereid=enchere.id
+  group by enchere.id
+  ;
