@@ -302,3 +302,25 @@ LEFT JOIN v_depense_utilisateur
 ON utilisateur.id = v_depense_utilisateur.utilisateurid
 LEFT JOIN v_entree_utilisateur
 ON utilisateur.id = v_entree_utilisateur.utilisateurid;
+
+CREATE OR REPLACE VIEW DemandeRecharge_NON_VALIDER
+AS
+select demandeRecharge.id,refdemande,somme,
+utilisateur.id As idutilisateur,
+refutilisateur,
+nom,
+prenom
+from demandeRecharge
+join utilisateur on utilisateur.id = demandeRecharge.utilisateurid
+where demanderecharge.id not in (select demanderechargeid from mouvementargent)
+;
+
+CREATE OR REPLACE VIEW V_mise_max
+as
+select enchere.id as idenchere,
+  max(somme) as maxmise
+  from enchere
+  join mise on
+  mise.enchereid=enchere.id
+  group by enchere.id
+  ;
