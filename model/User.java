@@ -60,7 +60,8 @@ public class User {
     }
     public void setMdp(String mdp) {
         if(mdp!=null){
-            this.mdp = Encrypte.getMd5Hash(mdp);
+            //this.mdp = Encrypte.getMd5Hash(mdp);
+            this.mdp=mdp;
         }
     }
     public String getNom() {
@@ -153,7 +154,8 @@ public class User {
             stmt.setString(1, email);
             ResultSet res=stmt.executeQuery();
             if(res.next()){
-                if(res.getString("mdp").equalsIgnoreCase(mdp)){
+                System.out.println("AAAAAAAAAAOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAALLLLLLLLLLOOOOOOOOOOOHHHHHHHHA"+res.getString("mdp")+" VE = A"+mdp);
+                if(res.getString("mdp").equalsIgnoreCase(Encrypte.getMd5Hash(mdp))){
                     int id=res.getInt("id");
                     String nptq = TokenManager.generateToken(id+mdp);
                     temp= new Token(nptq,id);
@@ -188,3 +190,4 @@ public static Token connnexion(String email,String mdp) throws EmailException, P
 }
 
 }
+
