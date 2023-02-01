@@ -1,12 +1,23 @@
 package model.enchere;
 
+import java.sql.Connection;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import org.bson.Document;
 import org.postgresql.util.PGInterval;
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 
 import gdao.genericdao.ColumnName;
 import model.EnchereEntity;
+import model.lot.MongoSaryCrud;
+import model.lot.Sary;
 
 public class Enchere extends EnchereEntity<Enchere>{
     @ColumnName
@@ -59,6 +70,44 @@ public class Enchere extends EnchereEntity<Enchere>{
     }
     public void setDuree(PGInterval duree) {
         this.duree = duree;
+    }
+    List<Sary> listSary;
+    
+    @Override
+    public int save() throws Exception {
+        int res=super.save();
+        if(listSary!=null && listSary.size()!=0){
+            MongoSaryCrud msc=new MongoSaryCrud("refEnchere", "ref");
+            int idLot=this.get().get(0).getIdLot();
+            for (Sary sary : listSary) {
+                sary.setIdLot(idLot);
+                msc.create(sary);
+            }
+            msc.close();
+        }
+        // TODO Auto-generated method stub
+        return res;
+    }
+    @Override
+    public int save(Connection con) throws Exception {
+        int res=super.save(con);
+        // TODO Auto-generated method stub
+        return res;
+    }
+    public List<Sary> getListSary() {
+        if(listSary==null){
+            MongoSaryCrud msc=new MongoSaryCrud("refEnchere", "ref");
+            this.listSary=msc.getSaryLot(idLot);
+            msc.close();
+        }
+        return this.listSary;
+    }
+    public void setListSary(List<Sary> listSary) {
+        this.listSary = listSary;
+    }
+    public List<Sary> getSary(){
+        MongoSaryCrud msc=new MongoSaryCrud("refEnchere", "ref");
+        return msc.getSaryLot(idLot);
     }
     
 }
