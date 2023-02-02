@@ -155,7 +155,7 @@ public class User {
             ResultSet res=stmt.executeQuery();
             if(res.next()){
                 System.out.println("AAAAAAAAAAOOOOOOOOOOOOOOOOOOOOKKKKKKKKKKAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAALLLLLLLLLLOOOOOOOOOOOHHHHHHHHA"+res.getString("mdp")+" VE = A"+mdp);
-                if(res.getString("mdp").equalsIgnoreCase(Encrypte.getMd5Hash(mdp))){
+                if(res.getString("mdp")==(Encrypte.getMd5Hash(mdp))){
                     int id=res.getInt("id");
                     String nptq = TokenManager.generateToken(id+mdp);
                     temp= new Token(nptq,id);
