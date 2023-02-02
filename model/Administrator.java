@@ -74,7 +74,7 @@ public class Administrator {
                 stmt.setString(1, email);
                 ResultSet res=stmt.executeQuery();
                 if(res.next()){
-                    if(res.getString("mdp").equalsIgnoreCase(Encrypte.getMd5Hash(mdp))){
+                    if(res.getString("mdp")==Encrypte.getMd5Hash(mdp)){
                         int id=res.getInt("id");
                         String nptq = TokenManager.generateToken(id+mdp);
                         temp= new Token(nptq,id);
