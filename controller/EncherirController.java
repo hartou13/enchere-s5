@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import gdao.genericdao.GenericDAO;
+import model.enchere.Enchere;
 import model.enchere.Mise;
+import model.lot.Lot;
 import responseHandler.Error;
 import responseHandler.Failure;
 import responseHandler.Success;
@@ -25,7 +28,7 @@ import responseHandler.Success;
 public class EncherirController {
 	
 	
-	@PostMapping("/rencherir/{idenchere}")
+	@GetMapping("/rencherir/{idenchere}")
 	public String rencherir(@PathVariable(value = "idenchere") Integer idEnchere,@RequestParam(name = "idUtilisateur") Integer idUtilisateur,@RequestParam(name = "somme") Double somme) {
 		Gson gson=new Gson();
 		try {
@@ -53,5 +56,34 @@ public class EncherirController {
 		}
 		return null;
 	}
+	
+	
+	@GetMapping("/getMiseMax")
+	public String getMiseMax(@RequestParam(name = "id") Integer idEnchere) {
+		Gson gson=new Gson();
+		try {
+			Mise mise=new Mise().getMiseMax(idEnchere, GenericDAO.getConPost());
+			return gson.toJson(new Success(mise.getSomme()));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@GetMapping("/getEnchere/{id}")
+	public String getEnchere(@PathVariable(value="id") Integer idEnchere)
+	{
+		Gson gson=new Gson();
+		try {
+			Enchere enchere=new Enchere().getById(idEnchere);
+			Lot lot=new Lot().getById(enchere.getIdLot());
+			return gson.toJson(new Success(lot));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}	
 	
 }
