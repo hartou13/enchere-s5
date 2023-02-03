@@ -29,13 +29,32 @@
 }
 
 
-#addCategorieTitle{
+#addCategorieForm{
+  background: #E8C16B!important;
+  color: #722308;
+  font-size: medium;
+  transition: 0.5s ease-in-out all;
+}
+
+#error{
+  color: red;
+}
+
+
+#nomLot{
     font-family: "Poppins";
-    font-size: 150%!important;
+    font-size: 300%!important;
     font-weight: lighter!important;
     color: #fff!important;
 }
 
+#desc{
+  
+  font-family: "Poppins";
+  font-size: 150%!important;
+  font-weight: lighter!important;
+  color: #fff!important;
+}
 
 
 #input{
